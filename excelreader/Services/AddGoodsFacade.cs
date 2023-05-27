@@ -14,6 +14,7 @@ namespace ExcelReader.Services
         private readonly AddLiquidsService _liquidsService;
         private readonly AddPodsService _podsService;
         private readonly AddCoalsService _coalsService;
+        private readonly AddECigarettesService _eCigarettesService;
 
         public AddGoodsFacade()
         {
@@ -29,6 +30,7 @@ namespace ExcelReader.Services
             ProducersApiService producersApiService = new ProducersApiService(apiService);
             PodsApiService podsApiService = new PodsApiService(apiService);
             CoalsApiSrvice coalsApiService = new CoalsApiSrvice(apiService);
+            ECigarettesApiService eCigarettesApiService = new ECigarettesApiService(apiService);
             ConfigureImagesService addImagesService = new ConfigureImagesService(imagesApiService);
             ConfigureProducersService addProducersService = new ConfigureProducersService(producersApiService);
 
@@ -36,6 +38,7 @@ namespace ExcelReader.Services
             _liquidsService = new AddLiquidsService(addImagesService, addProducersService, liquidsApiService);
             _podsService = new AddPodsService(addImagesService, addProducersService, podsApiService);
             _coalsService = new AddCoalsService(addImagesService, addProducersService, coalsApiService);
+            _eCigarettesService = new AddECigarettesService(addImagesService, addProducersService, eCigarettesApiService);
 
             apiService.Login("+380964873560", "1234");
         }
@@ -44,6 +47,7 @@ namespace ExcelReader.Services
         public void SendCartriges(IEnumerable<CartrigeAndVaporizerCE> cartriges) => _cartrigesService.SendToApi(cartriges);
         public void SendPods(IEnumerable<PodCE> pods) => _podsService.SendToApi(pods);
         public void SendCoals(IEnumerable<CoalCE> coals) => _coalsService.SendToApi(coals);
+        public void SendECigarettes(IEnumerable<ECigaretteCE> eCigarettes) => _eCigarettesService.SendToApi(eCigarettes);
 
     }
 }

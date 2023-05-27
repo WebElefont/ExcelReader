@@ -19,7 +19,6 @@ namespace ExcelReader.ApiServices
         private AuthenticationCE tokens;
         private DateTime _tokenCreationTime;
 
-        HttpContent content1 = null;
         public ApiService(HttpClient client)
         {
             _client = client;

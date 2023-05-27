@@ -102,6 +102,7 @@ namespace ExcelReader
                 case "Тютюн":
                     break;
                 case "Одноразка":
+                    addGoodsFacade.SendECigarettes(eCigarettes);
                     break;
                 case "Вугілля":
                     addGoodsFacade.SendCoals(coals);
@@ -137,6 +138,18 @@ namespace ExcelReader
                 case "Тютюн":
                     break;
                 case "Одноразка":
+                    foreach (var eCigarette in eCigarettes)
+                    {
+                        try
+                        {
+                            FileStream stream = File.OpenRead(eCigarette.ImageUrl);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Log("ERROR while checking images! " + "ObjectName - " + eCigarette.Name + " ImageURL - " + eCigarette.ImageUrl);
+                            isSucced = false;
+                        }
+                    }
                     break;
                 case "Вугілля":
                     foreach (var coal in coals)
