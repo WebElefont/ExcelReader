@@ -13,11 +13,13 @@ namespace ExcelReader.Services
         private readonly AddCartrigesService _cartrigesService;
         private readonly AddLiquidsService _liquidsService;
         private readonly AddPodsService _podsService;
+        private readonly AddCoalsService _coalsService;
+
         public AddGoodsFacade()
         {
             HttpClient httpClient = new HttpClient();
-            //httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
-            httpClient.BaseAddress = new Uri("http://localhost:5171");
+            httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
+            //httpClient.BaseAddress = new Uri("http://localhost:5171");
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             ApiService apiService = new ApiService(httpClient);
@@ -26,18 +28,22 @@ namespace ExcelReader.Services
             LiquidsApiService liquidsApiService = new LiquidsApiService(apiService);
             ProducersApiService producersApiService = new ProducersApiService(apiService);
             PodsApiService podsApiService = new PodsApiService(apiService);
+            CoalsApiSrvice coalsApiService = new CoalsApiSrvice(apiService);
             ConfigureImagesService addImagesService = new ConfigureImagesService(imagesApiService);
             ConfigureProducersService addProducersService = new ConfigureProducersService(producersApiService);
 
             _cartrigesService = new AddCartrigesService(addImagesService, addProducersService, cartrigesApiService);
             _liquidsService = new AddLiquidsService(addImagesService, addProducersService, liquidsApiService);
             _podsService = new AddPodsService(addImagesService, addProducersService, podsApiService);
+            _coalsService = new AddCoalsService(addImagesService, addProducersService, coalsApiService);
+
             apiService.Login("+380964873560", "1234");
         }
 
         public void SendLiquids(IEnumerable<LiquidCE> liquids) => _liquidsService.SendToApi(liquids); 
         public void SendCartriges(IEnumerable<CartrigeAndVaporizerCE> cartriges) => _cartrigesService.SendToApi(cartriges);
         public void SendPods(IEnumerable<PodCE> pods) => _podsService.SendToApi(pods);
+        public void SendCoals(IEnumerable<CoalCE> coals) => _coalsService.SendToApi(coals);
 
     }
 }

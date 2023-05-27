@@ -104,6 +104,7 @@ namespace ExcelReader
                 case "Одноразка":
                     break;
                 case "Вугілля":
+                    addGoodsFacade.SendCoals(coals);
                     break;
                 case "POD":
                     addGoodsFacade.SendPods(pods);
@@ -138,8 +139,32 @@ namespace ExcelReader
                 case "Одноразка":
                     break;
                 case "Вугілля":
+                    foreach (var coal in coals)
+                    {
+                        try
+                        {
+                            FileStream stream = File.OpenRead(coal.ImageUrl);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Log("ERROR while checking images! " + "ObjectName - " + coal.Name + " ImageURL - " + coal.ImageUrl);
+                            isSucced = false;
+                        }
+                    }
                     break;
                 case "POD":
+                    foreach (var pod in pods)
+                    {
+                        try
+                        {
+                            FileStream stream = File.OpenRead(pod.ImageUrl);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Log("ERROR while checking images! " + "ObjectName - " + pod.Name + " ImageURL - " + pod.ImageUrl);
+                            isSucced = false;
+                        }
+                    }
                     break;
                 case "Картридж":
                     foreach (var cartrige in cartriges)
@@ -470,9 +495,6 @@ namespace ExcelReader
                             case 6:
                                 coal.Weight = Convert.ToDouble(range.Cells[row, column].Value2);
                                 break;
-                            case 7:
-                                coal.CubeSize = Convert.ToDouble(range.Cells[row, column].Value2);
-                                break;
                         }
                     }
                     catch (Exception ex)
@@ -490,7 +512,7 @@ namespace ExcelReader
                 else
                 {
                     coals.Add(coal);
-                    logger.Log("Додано товар категорії " + coal.Category + ", Name - " + coal.Name + " | ProducerName - " + coal.ProducerName + " | ImageUrl - " + coal.ImageUrl + " | Price - " + coal.Price + " | Type - " + coal.Type + " | Weight - " + coal.Weight + " | CubeSize - " + coal.CubeSize);
+                    logger.Log("Додано товар категорії " + coal.Category + ", Name - " + coal.Name + " | ProducerName - " + coal.ProducerName + " | ImageUrl - " + coal.ImageUrl + " | Price - " + coal.Price + " | Type - " + coal.Type + " | Weight - " + coal.Weight);
                 }
 
             }

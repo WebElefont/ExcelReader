@@ -4,7 +4,6 @@
     {
         public string Type { get; set; }
         public double Weight { get; set; }
-        public double CubeSize { get; set; }
 
         public CoalCE() 
         {
