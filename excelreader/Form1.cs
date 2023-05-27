@@ -100,6 +100,7 @@ namespace ExcelReader
                     addGoodsFacade.SendLiquids(liquids);
                     break;
                 case "Тютюн":
+                    addGoodsFacade.SendHookahTobacco(tobacco);
                     break;
                 case "Одноразка":
                     addGoodsFacade.SendECigarettes(eCigarettes);
@@ -124,73 +125,37 @@ namespace ExcelReader
                 case "Рідина":
                     foreach (var liquid in liquids)
                     {
-                        try
-                        {
-                            FileStream stream = File.OpenRead(liquid.ImageUrl);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Log("ERROR while checking images! " + "ObjectName - " + liquid.Name + " ImageURL - " + liquid.ImageUrl);
-                            isSucced = false;
-                        }
+                        ImgCheck(liquid.ImageUrl, liquid.Name);
                     }
                     break;
                 case "Тютюн":
+                    foreach (var tobacc in tobacco)
+                    {
+                        ImgCheck(tobacc.ImageUrl, tobacc.Name);
+                    }
                     break;
                 case "Одноразка":
                     foreach (var eCigarette in eCigarettes)
                     {
-                        try
-                        {
-                            FileStream stream = File.OpenRead(eCigarette.ImageUrl);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Log("ERROR while checking images! " + "ObjectName - " + eCigarette.Name + " ImageURL - " + eCigarette.ImageUrl);
-                            isSucced = false;
-                        }
+                        ImgCheck(eCigarette.ImageUrl, eCigarette.Name);
                     }
                     break;
                 case "Вугілля":
                     foreach (var coal in coals)
                     {
-                        try
-                        {
-                            FileStream stream = File.OpenRead(coal.ImageUrl);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Log("ERROR while checking images! " + "ObjectName - " + coal.Name + " ImageURL - " + coal.ImageUrl);
-                            isSucced = false;
-                        }
+                        ImgCheck(coal.ImageUrl, coal.Name);
                     }
                     break;
                 case "POD":
                     foreach (var pod in pods)
                     {
-                        try
-                        {
-                            FileStream stream = File.OpenRead(pod.ImageUrl);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Log("ERROR while checking images! " + "ObjectName - " + pod.Name + " ImageURL - " + pod.ImageUrl);
-                            isSucced = false;
-                        }
+                        ImgCheck(pod.ImageUrl, pod.Name);
                     }
                     break;
                 case "Картридж":
                     foreach (var cartrige in cartriges)
                     {
-                        try
-                        {
-                            FileStream stream = File.OpenRead(cartrige.ImageUrl);
-                        }
-                        catch (Exception ex)
-                        {
-                            logger.Log("ERROR while checking images! " + "ObjectName - " + cartrige.Name + " ImageURL - " + cartrige.ImageUrl);
-                            isSucced = false;
-                        }
+                        ImgCheck(cartrige.ImageUrl, cartrige.Name);
                     }
                     break;
             }
@@ -344,7 +309,7 @@ namespace ExcelReader
                             case 10:
                                 tobacc.Strength = range.Cells[row, column].Value2;
                                 break;
-                            case 12:
+                            case 11:
                                 tobacc.Weight = Convert.ToDouble(range.Cells[row, column].Value2);
                                 break;
                         }
@@ -782,6 +747,20 @@ namespace ExcelReader
             {
                 Notepad();
             }
+        }
+
+        public void ImgCheck(string imgUrl, string name)
+        {
+                try
+                {
+                    FileStream stream = File.OpenRead(imgUrl);
+                }
+                catch (Exception ex)
+                {
+                    logger.Log("ERROR while checking images! " + "ObjectName - " + name + " ImageURL - " + imgUrl);
+                    isSucced = false;
+                }
+
         }
 
         public void Notepad()

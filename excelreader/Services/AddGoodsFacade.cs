@@ -15,12 +15,13 @@ namespace ExcelReader.Services
         private readonly AddPodsService _podsService;
         private readonly AddCoalsService _coalsService;
         private readonly AddECigarettesService _eCigarettesService;
+        private readonly AddHookahTobaccoService _hookahTobaccoService;
 
         public AddGoodsFacade()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
-            //httpClient.BaseAddress = new Uri("http://localhost:5171");
+            //httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
+            httpClient.BaseAddress = new Uri("http://localhost:5171");
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             ApiService apiService = new ApiService(httpClient);
@@ -31,6 +32,8 @@ namespace ExcelReader.Services
             PodsApiService podsApiService = new PodsApiService(apiService);
             CoalsApiSrvice coalsApiService = new CoalsApiSrvice(apiService);
             ECigarettesApiService eCigarettesApiService = new ECigarettesApiService(apiService);
+            HookahTobaccoApiService hookahTobaccoApiService = new HookahTobaccoApiService(apiService);
+
             ConfigureImagesService addImagesService = new ConfigureImagesService(imagesApiService);
             ConfigureProducersService addProducersService = new ConfigureProducersService(producersApiService);
 
@@ -39,6 +42,7 @@ namespace ExcelReader.Services
             _podsService = new AddPodsService(addImagesService, addProducersService, podsApiService);
             _coalsService = new AddCoalsService(addImagesService, addProducersService, coalsApiService);
             _eCigarettesService = new AddECigarettesService(addImagesService, addProducersService, eCigarettesApiService);
+            _hookahTobaccoService = new AddHookahTobaccoService(addImagesService, addProducersService, hookahTobaccoApiService);
 
             apiService.Login("+380964873560", "1234");
         }
@@ -48,6 +52,6 @@ namespace ExcelReader.Services
         public void SendPods(IEnumerable<PodCE> pods) => _podsService.SendToApi(pods);
         public void SendCoals(IEnumerable<CoalCE> coals) => _coalsService.SendToApi(coals);
         public void SendECigarettes(IEnumerable<ECigaretteCE> eCigarettes) => _eCigarettesService.SendToApi(eCigarettes);
-
+        public void SendHookahTobacco(IEnumerable<HookahTobaccoCE> hookahTobaccos) => _hookahTobaccoService.SendToApi(hookahTobaccos);
     }
 }
