@@ -159,7 +159,7 @@ namespace ExcelReader
                     }
                     break;
             }
-            ImageCheck(isSucced);
+            ImageCheckLog(isSucced);
         }
 
         private void btnChangeImgPath_MouseClick(object sender, MouseEventArgs e)
@@ -298,10 +298,10 @@ namespace ExcelReader
                                 tobacc.Sour = Convert.ToByte(range.Cells[row, column].Value2);
                                 break;
                             case 7:
-                                tobacc.Fresh = Convert.ToByte(range.Cells[row, column].Value2);
+                                tobacc.Spicy = Convert.ToByte(range.Cells[row, column].Value2);
                                 break;
                             case 8:
-                                tobacc.Spicy = Convert.ToByte(range.Cells[row, column].Value2);
+                                tobacc.Fresh = Convert.ToByte(range.Cells[row, column].Value2);
                                 break;
                             case 9:
                                 tobacc.Taste = range.Cells[row, column].Value2;
@@ -771,7 +771,7 @@ namespace ExcelReader
             p.Start();
         }
 
-        public void ImageCheck(bool isSucced)
+        public void ImageCheckLog(bool isSucced)
         {
             if (isSucced)
             {
@@ -822,6 +822,5 @@ namespace ExcelReader
         }
 
         #endregion
-
     }
 }

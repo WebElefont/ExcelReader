@@ -20,8 +20,8 @@ namespace ExcelReader.Services
         public AddGoodsFacade()
         {
             HttpClient httpClient = new HttpClient();
-            //httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
-            httpClient.BaseAddress = new Uri("http://localhost:5171");
+            httpClient.BaseAddress = new Uri("https://smokyiceshopapitest20230411200906.azurewebsites.net");
+            //httpClient.BaseAddress = new Uri("http://localhost:5171");
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             ApiService apiService = new ApiService(httpClient);
